@@ -1,0 +1,176 @@
+int numero= 0;
+
+void setup()
+{
+  randomSeed(analogRead(0));
+  numero = random(50);
+  Serial.begin(9600);
+  Serial.print("El numero generado es: ");
+  Serial.println(numero);
+  int b = numero/2;
+  float c= numero/2.0;
+  if (abs(b-c) == 0)
+  {
+    Serial.println("El numero es par!");
+  }
+  else
+  {
+    Serial.println("El numero es impar!");
+  }
+   
+   
+  
+}
+
+void loop()
+{
+ }
+ 
+==========================================================================================================
+int voltaje= 0;
+int pwm=0;
+void setup()
+{
+  pinMode(A0, INPUT);
+  pinMode(5, OUTPUT);
+  Serial.begin(9600);  
+}
+
+void loop()
+{
+  voltaje = analogRead(A0);
+  pwm = voltaje/4;
+  analogWrite(5, pwm);
+  
+  Serial.print("El voltaje digital medido es:");
+  Serial.println(voltaje);
+  
+  Serial.print("El pwm generado es: ");
+  Serial.println(pwm);
+  
+  delay(200);
+ }
+ ===================================================================================
+
+int prev = 1;
+int current = 0;
+int next = 0;
+int iteracion = 0;
+bool overflow=false;
+
+void setup()
+{
+  Serial.begin(9600);
+}
+
+void loop()
+{
+  if(overflow == 0)
+  {
+    iteracion ++;
+    current = next;
+    Serial.println(current);
+    next = current + prev;
+    prev = current;
+    
+    if(current<0)
+    {
+      Serial.print("Overflow en la iteracion: ");
+      Serial.println(iteracion);
+      overflow = true;
+      
+    }
+  }
+  delay(500);
+}
+=========================================================================
+//Declaracion de las variables
+const int trigger=2;
+const int echo=3;
+const int rojo=12;
+const int amarillo=11;
+const int verde=10;
+void setup()
+{
+  Serial.begin(9600);//inicializacion comunicacion
+  pinMode(trigger, OUTPUT); //pin c[omo salida
+  pinMode(echo, INPUT);//pin como entrada
+  
+  pinMode(rojo, OUTPUT); //pin c[omo salida
+  pinMode(amarillo, OUTPUT); //pin c[omo salida
+  pinMode(verde, OUTPUT); //pin c[omo salida
+  
+  digitalWrite(trigger,LOW);//inicializa el pin con 0
+
+}
+
+void loop()
+{
+  long t; //tiempo en que llega echo
+  long d; //distancia en centimetros
+  
+  digitalWrite(trigger, HIGH);
+  delayMicroseconds(10);// Envia un pulso de 10 us
+  digitalWrite(trigger, LOW);
+  
+  t= pulseIn(echo, HIGH); //obtenemos el ancho del pulso
+  d = t/59;
+  
+  Serial.print("Distancia sensor de Nombre:");
+  Serial.print(d);  //se encia serialmente el valor de la distancia
+  Serial.print("cm");
+  Serial.println();
+  delay(100);  //Hacemos una pausa de 100ms 
+  if(d>250)
+  {
+    digitalWrite(rojo, HIGH);
+    digitalWrite(amarillo, LOW);
+    digitalWrite(verde, LOW);
+  }
+  else if(d>150 || d<10)
+  {
+    digitalWrite(rojo, LOW);
+    digitalWrite(amarillo, HIGH);
+    digitalWrite(verde, LOW);
+  }
+  else 
+  {
+    digitalWrite(rojo, LOW);
+    digitalWrite(amarillo, LOW);
+    digitalWrite(verde, HIGH);
+  }
+   
+
+}
+*********************************************
+
+int numero =0;
+int bit1 = 0;
+int bit2 = 0;
+int bit3 = 0;
+
+void setup()
+{
+  randomSeed(analogRead(0));
+  numero=random(80)/10;// 80 el limite es esclusivo
+  Serial.begin(9600);
+  Serial.print("el numero generado fue: ");
+  Serial.println(numero);
+  
+  bit1 = bitRead(numero,0);
+  bit2 = bitRead(numero,1);
+  bit3 = bitRead(numero,2);
+  
+  pinMode(7, OUTPUT);
+  pinMode(6, OUTPUT);
+  pinMode(5, OUTPUT);
+  
+  digitalWrite(7,bit3);
+  digitalWrite(6,bit2);
+  digitalWrite(5,bit1);
+
+
+}
+void loop()
+{
+}
